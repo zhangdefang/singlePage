@@ -1,0 +1,83 @@
+[{
+    "label": "预测数据",
+    "menuList": [{
+        "label": "系统负荷预测",
+        "isComponent": false,
+        "path": "/ForecastDataMan_UI/sysloadforecast/shortTermLoadForecasting.html",
+        "id": "XTFHYC"
+    }, {
+        "label": "母线负荷预测",
+        "isComponent": false,
+        "path": "/ForecastDataMan_UI/vue/busLoadForecasting.html",
+        "id": "MXFHYC"
+    }, {
+        "label": "新能源预测",
+        "isComponent": false,
+        "path": "/ForecastDataMan_UI/vue/NewEnergyForecast.html",
+        "id": "XNYYC"
+    }]
+}, {
+    "label": "计划数据",
+    "menuList": [{
+        "label": "联络线计划",
+        "isComponent": false,
+        "path": "/ForecastDataMan_UI/vuePages/linePlan.html",
+        "id": "LLXJH"
+    }, {
+        "label": "机组检修计划",
+        "isComponent": false,
+        "path": "/ForecastDataMan_UI/vuePages/unitServicesPlan.html",
+        "id": "JZJXJH"
+    }, {
+        "label": "输变电设备检修计划",
+        "isComponent": false,
+        "path": "/ForecastDataMan_UI/vue/equipServicesPlan.html",
+        "id": "SBDSBJXJH"
+    }, {
+        "label": "机组固定出力",
+        "isComponent": false,
+        "path": "/ForecastDataMan_UI/vue/unitFixedOutput.html",
+        "id": "JZGDCL"
+    }, {
+        "label": "机组发电计划",
+        "isComponent": false,
+        "path": "/MonthPlanMan_UI/vuePages/unitPlan.html?caseType=20",
+        "id": "JZFDJH"
+    }]
+}, {
+    "label": "申报数据",
+    "menuList": [{
+        "label": "机组出力限额",
+        "isComponent": false,
+        "path": "/ForecastDataMan_UI/vue/unitOutputLimit.html",
+        "id": "JZCLXE"
+    }, {
+        "label": "机组启停曲线",
+        "isComponent": false,
+        "path": "/ConstrainDataMan_UI/unitstartstopcurve/unitstartstopcurve.html",
+        "id": "JZQTQX"
+    }, {
+        "label": "机组市场报价",
+        "isComponent": false,
+        "path": "/BidDataMan_UI/vuePages/unitMarketOffer.html",
+        "id": "JZSCBJ"
+    }]
+}, {
+    "label": "约束数据",
+    "menuList": [{
+        "label": "机组群约束",
+        "isComponent": false,
+        "path": "/BidDataMan_UI/vuePages/unitGroupRestrainMan.html",
+        "id": "JZQYS"
+    }, {
+        "label": "机组必开必停",
+        "isComponent": false,
+        "path": "/ConstrainDataMan_UI/VueBuild/UnitMustStartStop.html",
+        "id": "JZBKBT"
+    }, {
+        "label": "系统备用需求",
+        "isComponent": false,
+        "path": "/ForecastDataMan_UI/vue/systemStandby.html",
+        "id": "XTBYXQ"
+    }]
+}]

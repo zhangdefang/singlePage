@@ -1,0 +1,169 @@
+
+.vl-notify.vl-notify-alert h2.vl-notice-title {
+  background-color: #f9f9f9 !important;
+  border-bottom: 1px solid #dcdfe6 !important;
+}
+.el-table__header-wrapper {
+  /* height: 35px !important; */
+}
+
+.titltIcon {
+  width: 20px;
+  height: 20px;
+  background: url('../images/icon.png') 100% 100%;
+  margin: auto 0;
+}
+
+.titltIcon+span {
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  padding-left:5px;
+}
+
+button>span {
+  margin-left: 3px;
+}
+
+/* 修改label样式*/
+.drop-panel .el-tag.el-tag--info {
+  background-color: #fff;
+  border: 0;
+  color:#000;
+}
+
+.vl-notify.vl-notify-alert h2.vl-notice-title {
+  background-color: #f9f9f9 !important;
+  border-bottom: 1px solid #dcdfe6 !important;
+}
+
+/*设置表格选中默认背景色 */
+.drop-panel .el-table__body tr.current-row > td {
+  background-color: #ebeef2 !important;
+}
+
+.drop-panel .el-table--striped .el-table__body tr.el-table__row--striped.current-row td {
+  background-color: #ebeef2;
+}
+
+/* 修改隔行变色的颜色 */
+.el-table--striped .el-table__body tr.el-table__row--striped.el-table__row--striped.el-table__row--striped td {
+  background-color: #fafafa;
+  /*替换为你需要的颜色，觉得优先级不够就加!important*/
+}
+
+.el-table--border:after,
+.el-table--group:after,
+.el-table:before {
+  background-color: #e4e4e4 !important;
+}
+
+.el-table--border,
+.el-table--group {
+  border-color: #e4e4e4 !important;
+}
+
+.el-table td,
+.el-table th.is-leaf {
+  border-bottom: 1px solid #e4e4e4 !important;
+}
+
+.el-table--border th,
+.el-table--border th.gutter:last-of-type {
+  border-bottom: 1px solid #e4e4e4 !important;
+}
+
+.el-table--border td,
+.el-table--border th {
+  border-right: 1px solid #e4e4e4 !important;
+}
+
+/* //根据ui提供样式修改禁用按钮样式 */
+.el-button--primary.is-disabled,
+.el-button--primary.is-disabled:active,
+.el-button--primary.is-disabled:focus,
+.el-button--primary.is-disabled:hover {
+  color: #fff;
+  background-color: #08429d !important;
+  opacity: 0.5;
+  border: 0;
+}
+/* 根据ui提供修改表格表头字体不加粗 */
+.el-table thead div {
+  font-weight: normal !important;
+}
+
+.el-table th {
+  background: linear-gradient(to top, #073c8f, #08429d);
+  color: #fff;
+}
+
+.el-table th>.cell {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.el-pager li.active {
+  color: #073c8f;
+}
+
+/* 修改border-card padding宽度 */
+.el-tabs--border-card>.el-tabs__content {
+  padding: 10px !important;
+  box-sizing: border-box;
+}
+
+
+/* 按钮样式 */
+.el-button--primary {
+  background-color: #08429d;
+  height: 32px;
+  border: 0
+}
+
+button>span {
+  margin-left: 3px;
+}
+
+.drop-panel .el-button--mini, .el-button--mini.is-round {
+  margin:auto 0;
+}
+
+/*jexcel表头设置颜色样式*/
+.jexcel > thead > tr > td {
+  background: rgb(7,60,143);
+  text-align: center;
+  color: rgb(255, 255, 255);
+  font-family: "Microsoft Yahei";
+}
+.jexcel > tbody > tr > td.readonly {
+  color: rgb(0,0,0);
+}
+.jexcel {
+  margin: 5px;
+}
+/* 行布局样式 */
+.el-row--flex {
+  /* padding-top: 5px; */
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-width: 1px;
+  border-color: rgb(221, 221, 221);
+  border-style: solid;
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+.osp-date-total {
+  margin: auto 0;
+}
+
+.el-select {
+  margin: auto 0;
+}
+
+.drop-panel .el-button--mini, .el-button--mini.is-round {
+  margin:auto 0;
+  margin-left: 10px;
+  background-color: #073c8f ;
+  border-color: #08429d;
+}

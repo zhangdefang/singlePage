@@ -1,0 +1,75 @@
+{
+  "name": "appexplore",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "npm run serve",
+    "serve": "vue-cli-service serve",
+    "build:dev": "cross-env NODE_ENV=development vue-cli-service build",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-polyfill": "^6.26.0",
+    "core-js": "^2.6.5",
+    "csv-exportor": "^1.0.2",
+    "echarts": "^4.2.0-rc.2",
+    "echarts-liquidfill": "^2.0.6",
+    "element-ui": "^2.13.0",
+    "file-saver": "^2.0.5",
+    "font-awesome": "^4.7.0",
+    "jexcel": "^4.2.0",
+    "lodash": "^4.17.11",
+    "usp-ui": "^1.1.10",
+    "vue": "^2.6.11",
+    "vue-calendar-component": "^2.8.2",
+    "vue-resource": "^1.5.1",
+    "vue-router": "^3.1.3",
+    "vue-sketch-ruler": "^1.0.3",
+    "xlsx": "^0.16.9"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.2.0",
+    "@vue/cli-plugin-eslint": "^3.2.0",
+    "@vue/cli-service": "^3.12.1",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-component": "^1.1.1",
+    "compression-webpack-plugin": "^3.1.0",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0-0",
+    "glob": "^7.1.3",
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
+    "script-loader": "^0.7.2",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {
+      "no-console": "off"
+    },
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}

@@ -1,0 +1,788 @@
+<template>
+  <div class="contain" >   
+      <div class="up">
+           <div class="title1">
+              <svg >
+                <defs>
+                  <linearGradient id="grad" x1="0%" y1="100%" x2="0%" y2="0%">
+                      <stop offset="0%" style="stop-color:#c7f0f9; stop-opacity:1" />
+                      <stop offset="50%" style="stop-color:#1ffae1; stop-opacity:1" />
+                      <stop offset="100%" style="stop-color:#1ffae1; stop-opacity:1" />
+                  </linearGradient>
+                </defs>
+                <text x="0" y="17" fill="url(#grad)" style="font-size:16px;font-weight:400;">统计任务</text>
+              </svg>
+           </div>
+           <div class="up_select">
+              <div class="riqi">日期 :</div>
+              <div class="dtime2">
+                  <el-date-picker v-model="ddtime" value-format="yyyy-MM-dd" type="date" placeholder="选择日期" > </el-date-picker>
+              </div> 
+              <div class="zhibiao">
+                <svg >
+                <defs>
+                  <linearGradient id="grad" x1="0%" y1="100%" x2="0%" y2="0%">
+                      <stop offset="0%" style="stop-color:#c7f0f9; stop-opacity:1" />
+                      <stop offset="50%" style="stop-color:#1ffae1; stop-opacity:1" />
+                      <stop offset="100%" style="stop-color:#1ffae1; stop-opacity:1" />
+                  </linearGradient>
+                </defs>
+                <text x="0" y="15" fill="url(#grad)" style="font-size:15px;font-weight:400;">任务名称 :</text>
+              </svg>
+              </div>
+              <div class="input"><el-input v-model="input" placeholder="请输入内容"></el-input></div>
+              <div class="zhibiaotype">
+                <svg >
+                <defs>
+                  <linearGradient id="grad" x1="0%" y1="100%" x2="0%" y2="0%">
+                      <stop offset="0%" style="stop-color:#c7f0f9; stop-opacity:1" />
+                      <stop offset="50%" style="stop-color:#1ffae1; stop-opacity:1" />
+                      <stop offset="100%" style="stop-color:#1ffae1; stop-opacity:1" />
+                  </linearGradient>
+                </defs>
+                <text x="0" y="15" fill="url(#grad)" style="font-size:15px;font-weight:400;">任务类型 :</text>
+              </svg>
+              </div>
+              <div class="select">
+                <el-select v-model="valuetype" placeholder="请选择">
+                    <el-option
+                      v-for="item in options"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                </el-select>
+              </div> 
+              <div class="button1"><el-button type="primary" @click="query"                              > 查询</el-button></div>
+              <div class="button2"><el-button type="primary" @click="open"                             > 计算</el-button></div>
+              <div class="button3"><el-button type="primary" @click="jumplink" > 跳转</el-button></div>                        
+           </div>
+           <div class="up_table_1_2">
+             <div class="table1">
+                  <el-table
+                      style="width: 100%;background:transparent !important"
+                       ref="multipleTable"
+                      :data="tableData"           
+                      @selection-change="handleSelectionChange"
+                      height="100%"
+                      :cell-style="{color:'white',fontsize:'16px'}"
+                      :header-cell-style="{background:'#00a1a7',color:'white'}"
+                      >
+                      <el-table-column         
+                        type="selection"
+                        width="50">
+                      </el-table-column>
+                      <el-table-column
+                        align="center"
+                        label="序号"
+                        type="index"
+                        width="100">
+                      </el-table-column>
+                      <el-table-column
+                        align="center"
+                        prop="task_id"
+                        label="任务ID"
+                        width="180">
+                      </el-table-column>
+                      <el-table-column
+                        align="center"
+                        prop="task_name"
+                        label="任务名称"
+                        width="180">
+                      </el-table-column>
+                      <el-table-column
+                        align="center"
+                        prop="pre_task"
+                        label="前序统计任务"   
+                        width="180">            
+                      </el-table-column>
+                      <el-table-column
+                        align="center"
+                        prop="stat_type"
+                        label="任务类型"                          
+                        >            
+                        <template slot-scope="scope">
+                           <span v-if="scope.row.stat_type==0">人工</span> 
+                           <span v-if="scope.row.stat_type==1">事前</span>   
+                           <span v-if="scope.row.stat_type==2">事后</span>  
+                        </template> 
+                      </el-table-column>
+                  </el-table>
+             </div>
+             <div class="table2">
+               <el-table
+                    :data="tableData2"
+                    :cell-style="{color:'white'}"
+                    :header-cell-style="{background:'#00a1a7',color:'white'}"
+                    height="100%"
+                    row-key="index_code"
+                    default-expand-all
+                    :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+                    <el-table-column
+                      align="left"
+                      prop="caption"
+                      label="名称"                 
+                      width="200">
+                    </el-table-column>
+                    <el-table-column
+                      align="center"
+                      prop="index_code"
+                      label="编码"
+                      width="200">
+                    </el-table-column>
+                    <el-table-column
+                      align="center"
+                      prop="storage_table"
+                      label="存储表名"
+                      width="240">
+                    </el-table-column>
+                      <el-table-column
+                      align="center"
+                      prop="task_id"
+                      label="所属统计序列">
+                    </el-table-column>
+               </el-table>
+             </div>
+           </div>
+      </div>
+
+      <el-dialog :title="dialogtitle" :visible.sync="dialogVisible"  width="27%">
+          <div style="width=400px;height:120px;">
+              <div class="riqi1">开始时间 :</div>
+              <div class="dtime21">
+                  <el-date-picker size="small" v-model="ddtime1" value-format="yyyy-MM-dd" type="date" placeholder="选择日期" > </el-date-picker>
+              </div>
+              <div class="riqi2">结束时间 :</div>
+              <div class="dtime22">
+                  <el-date-picker size="small" v-model="ddtime2" value-format="yyyy-MM-dd" type="date" placeholder="选择日期" > </el-date-picker>
+              </div> 
+          </div>
+          <span slot="footer" class="dialog-footer">
+            <el-button  @click="dialogVisible = false">取 消</el-button>
+            <el-button  @click="saveTimeType"         >保存</el-button>
+            <el-button  @click="dialogcalculate"      >计算</el-button>
+          </span>
+      </el-dialog>
+
+      <div class="down">
+           <div class="title1">
+             <svg >
+                <defs>
+                  <linearGradient id="grad" x1="0%" y1="100%" x2="0%" y2="0%">
+                      <stop offset="0%" style="stop-color:#c7f0f9; stop-opacity:1" />
+                      <stop offset="50%" style="stop-color:#1ffae1; stop-opacity:1" />
+                      <stop offset="100%" style="stop-color:#1ffae1; stop-opacity:1" />
+                  </linearGradient>
+                </defs>
+                <text x="0" y="17" fill="url(#grad)" style="font-size:16px;font-weight:400;">计算日志</text>
+              </svg>
+           </div>
+           <div class="table3">
+               <el-table
+                      :cell-style="{color:'white'}"
+                      :row-style="{color:'white'}"
+                      :header-cell-style="{background:'#00a1a7',color:'white'}"
+                      :data="tableData3"
+                      height="100%"
+                      >             
+                      <el-table-column
+                        align="center"
+                        label="序号"
+                        type="index"
+                        width="100">
+                      </el-table-column>
+                      <el-table-column
+                        align="center"
+                        prop="update_time"
+                        label="更新时间"
+                        width="200">
+                      </el-table-column>
+                      <el-table-column
+                        align="center"
+                        prop="index_code"
+                        label="任务ID"
+                        width="180">
+                      </el-table-column>
+                      <!-- <el-table-column
+                        align="center"
+                        prop="zhibiaoName"
+                        label="任务名称"
+                        width="180">
+                      </el-table-column> -->
+                      <el-table-column
+                        align="center"
+                        prop="status"
+                        label="计算状态"
+                        width="180"> 
+                           <template slot-scope="scope">
+                           <span v-if="scope.row.status==0" style="color:#00f6ff">计算成功</span> 
+                           <span v-if="scope.row.status==1" style="color:#ffaf10">存在问题</span>   
+                           <span v-if="scope.row.status==2" style="color:#ff341f">计算失败</span>  
+                        </template>                     
+                      </el-table-column>
+                      <el-table-column
+                        align="center"
+                        prop="content"
+                        label="详细信息">                        
+                      </el-table-column>
+                  </el-table>
+           </div>
+      </div>
+  </div>
+</template>
+
+<script>
+ export default {
+    data() {
+      return { 
+        calculate1:[],
+        tableData3:[],
+        tableData: [],
+        tableData2:[],
+        options: [{value: '0',label: '全部'}, { value: '1',label: '事前'}, {value: '2',label: '事后'}],
+        valuetype: "0",
+        ddtime:'',
+        ddtime1:'',
+        ddtime2:'', 
+        input:'',
+        dialogVisible:false,
+        timetype:'',
+        dialogtitle:''
+      }
+    }, 
+    components: {},
+    mounted() {
+      this.inittime();
+      this.query();
+    },
+    methods: {
+      jumplink(){
+          var ids=""
+          var arr=this.calculate1;
+          for (let i = 0; i < arr.length; i++) {
+               ids=ids+arr[i]+",";            
+          }
+          var task_list=ids.substring(0,ids.length-1); 
+          var url=location.protocol+'//'+location.host+'/pms/MarketIndex/IndicatorMain/index.html?date='+this.ddtime+'&task_list='+task_list;
+          console.log('跳转地址'+url);
+          console.log(top.displayPage);
+          if(top.displayPage){
+            top.displayPage("JGCX","结果查询",url,false);
+          }else{
+            window.open(url);
+          }
+      },
+      timeFormat(date){
+        var y = date.getFullYear();
+        var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+        var d = (date.getDate()  < 10 ? '0' + (date.getDate()) : date.getDate());
+        var mydate = y + '-' + m+'-'+d;
+        return mydate;
+      },
+      getNewDay(dateTemp, days) { //加天数
+          var dateTemp = dateTemp.split("-");  
+          var nDate = new Date(dateTemp[1] + '-' + dateTemp[2] + '-' + dateTemp[0]); //转换为MM-DD-YYYY格式  
+          var millSeconds = Math.abs(nDate) + (days * 24 * 60 * 60 * 1000);  
+          var rDate = new Date(millSeconds);  
+          var year = rDate.getFullYear();  
+          var month = rDate.getMonth() + 1;  
+          if (month < 10) month = "0" + month;  
+          var date = rDate.getDate();  
+          if (date < 10) date = "0" + date;  
+          return (year + "-" + month + "-" + date);  
+      },
+      getDateMinusDay(date,day){//减天数
+        date=date.replace(/-/g,"/");
+        var a = new Date(date);
+        a = a.valueOf();
+        a = a - day * 24 * 60 * 60 * 1000;
+        a = new Date(a)
+        var month =a.getMonth()+1;
+        if(month<=9){
+            month ='0'+month ;
+        }
+        return (a.getFullYear() + '-' + month + '-' + a.getDate());
+      },
+      /**
+       * @param startDate  开始日期 yyyy-MM-dd
+       * @param enDate     结束日期 yyyy-MM-dd
+       * @returns {number} 两日期相差的天数
+       */
+      getDaysBetween(startDate, enDate) {
+        const sDate = Date.parse(startDate)
+        const eDate = Date.parse(enDate)
+        if (sDate > eDate) {
+          return 0
+        }
+        if (sDate === eDate) {
+          return 1
+        }
+        const days = (eDate - sDate) / (1 * 24 * 60 * 60 * 1000)
+        return days
+      },
+      opendialog(){
+        this.dialogtitle='当前使用参数';
+        let options = {
+          emulateJSON: false,
+          headers: {"Content-Type": "application/json;"}
+        };
+        let url = "/pms/MarketAssessment/rest/calculate/queryTimeType/6002";  
+        this.$http.get(url,options).then(res => {
+          this.timetype=res.body.remark;
+          var year=this.ddtime.substr(0,4);//年
+          var month=this.ddtime.substr(5,2);//月
+          if(this.timetype=='day'){
+            this.ddtime1=this.ddtime;
+            this.ddtime2=this.ddtime;
+          }else if(this.timetype=='month'){
+            this.ddtime1=this.timeFormat(new Date(year,month-1,1));
+            this.ddtime2=this.timeFormat(new Date(year,month,0));
+          }else{
+            this.ddtime1=this.ddtime;
+            this.ddtime2=this.getNewDay(this.ddtime,this.timetype);
+          }
+          this.dialogVisible=true;
+        }); 
+      },
+      saveTimeType(){
+        var time_type='';
+        var year=this.ddtime.substr(0,4);//年
+        var month=this.ddtime.substr(5,2);//月
+        var begin=this.timeFormat(new Date(year,month-1,1));//月初
+        var end=this.timeFormat(new Date(year,month,0));    //月末
+        console.log(this.ddtime+"=="+this.ddtime1+"=="+this.ddtime2);
+        if(this.ddtime==this.ddtime1 && this.ddtime==this.ddtime2){
+          time_type='day';
+        }else if(this.ddtime1==begin && this.ddtime2==end){
+          time_type='month';
+        }else{
+          time_type=this.getDaysBetween(this.ddtime1,this.ddtime2);
+        }
+        let options = {
+          emulateJSON: false,
+          headers: {"Content-Type": "application/json;"}
+        };
+        let data = {"time_type":time_type,"task_id":'6002'}; 
+        let url = "/pms/MarketAssessment/rest/calculate/saveTimeType";  
+        this.$http.post(url,data,options).then(res => {
+          if(res.body.success==true){
+              this.$message({type: 'success', message: '保存成功!'});
+          }else{
+            this.$message({type: 'error', message: '保存失败!'});
+          }
+        });
+      },
+      dialogcalculate(){
+          var ids=""
+          var arr=this.calculate1;
+          for (let i = 0; i < arr.length; i++) {
+            ids=ids+arr[i]+","            
+          }
+          var month=this.ddtime;
+          this.calculate(ids,month);
+          this.dialogVisible = false;
+      },
+      inittime(){
+          var date = new Date();
+          var y = date.getFullYear();
+          var m = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+          var d = (date.getDate()  < 10 ? '0' + (date.getDate()) : date.getDate());
+          var mydate = y + '-' + m+'-'+d;
+          this.ddtime=mydate;
+      },
+      query(){
+        this.queryAll();
+        this.queryCalculate();
+      },
+      queryAll(){
+        var input=this.input;
+        var select=this.valuetype;
+        
+        let options = {
+          emulateJSON: false,
+          headers: {"Content-Type": "application/json;"}
+        };
+        let data = {"mohu":input, "pulldown":select}; 
+        let url = "/pms/MarketAssessment/rest/calculate/queryAll";  
+        this.$http.post(url,data,options).then(res => {
+          this.tableData=res.body;
+        }); 
+      },
+      queryCalculate(){
+        var month=this.ddtime;      
+        let options = {
+          emulateJSON: false,
+          headers: {"Content-Type": "application/json;"}
+        };
+        let data = {"month":month}; 
+        let url = "/pms/MarketAssessment/rest/calculate/queryCalculate";  
+        this.$http.post(url,data,options).then(res => {
+          this.tableData3=res.body;
+        }); 
+      },        
+      handleSelectionChange(val) {
+        var arr=new Array();  
+        for (let i = 0; i < val.length; i++) {
+          arr.push(val[i].task_id);
+        }
+        this.calculate1=arr;
+        if(arr.length > 0){
+            let options = {
+              emulateJSON: false,
+              headers: {"Content-Type": "application/json;"}
+            };
+            let data = {"ids":arr}; 
+            let url = "/pms/MarketAssessment/rest/calculate/queryDetail";  
+            this.$http.post(url,data,options).then(res => {
+              if(res.body.length>0){
+                this.tableData2=res.body;
+              }else{
+                  this.tableData2=[];
+              }      
+            }); 
+        }else{
+            this.tableData2=[]; 
+        }
+      },
+      open() {
+        this.$confirm('将进行计算操作, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          var ids=""
+          //获取多选框点击的id
+          var openflag=false;
+          var arr=this.calculate1;
+          for (let i = 0; i < arr.length; i++) {
+            if(arr[i]=='6002'){
+              openflag=true;
+            }
+            ids=ids+arr[i]+","            
+          }
+          var month=this.ddtime;
+          console.log(arr);
+          console.log(month); 
+          if (month === "" || month === null) {
+            this.$message({showClose: true,message: '请选择计算日期!'});
+            return;
+          }
+          if(arr.length==0){
+            this.$message({showClose: true,message: '请选取需要计算的任务!'});
+            return;
+          }
+          console.log(openflag);
+          if(openflag==true){
+            this.opendialog();
+          }else{
+            this.calculate(ids,month);
+          }
+          /*
+          this.$message({type: 'success', message: '删除成功!'});
+          */
+        }).catch(() => {
+          /*
+          this.$message({type: 'info', message: '已取消'});  
+          */  
+        });
+      },
+      calculate(ids,month){
+          var task_list=ids.substring(0,ids.length-1); 
+          let options = {
+              emulateJSON: false,
+              headers: {"Content-Type": "application/json;"}
+          };    
+          let url = "/pms/ESM_MarketStat/rest/MarketEvaluate/statManual?data_time="+month+"&task_list="+task_list+"";  
+          this.openFullScreen();
+          this.$http.get(url,options).then(res => {
+            if(res.body.successful==true){
+              this.queryCalculate();
+              this.closeFullScreen(this.openFullScreen());
+            }
+            else{
+              this.$message({showClose: true,message: "计算失败"});  
+              this.queryCalculate();
+              this.closeFullScreen(this.openFullScreen());
+            }             
+          }); 
+      },
+      openFullScreen() {
+        const loading = this.$loading({
+          lock: true,
+          text: '正在计算',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+        return loading;
+      },
+      closeFullScreen(loading){
+        loading.close();
+      }
+    }
+};
+</script>
+<style lang="less" scoped>
+ .contain {
+  height: 100%;
+  width: 100%;
+  background-image: url("img/02页面背景.png");
+  background-size: cover;
+  position: absolute;
+}
+
+.up{
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  height: calc(60% - 40px);
+  width: calc(100% - 40px);
+  background-image: url("img/统计任务_背景框.png");
+  background-size:100% 100%;
+}
+
+.down{
+  margin-top: 25px;margin-left: 20px;margin-right: 20x; width: calc(100% - 40px);
+  height: calc(40% - 25px);
+  background-image: url("img/计算日志_边框.png");
+  background-size: 100% 100%;
+}
+
+.title1{
+  width: 100px;
+  height: 30px;  
+  margin:auto;
+  padding-top:3px;
+  text-align:center;
+  float:over;
+}
+
+.title2{
+width: 100px;
+height: 30px;  
+margin-left:47.5%;
+padding-top:3px;
+text-align:center;
+font-size: 18px;
+float:over;
+}
+
+.up_select{
+width: 100%;
+height: 15%;
+}
+
+.up_table_1_2{
+width: 100%;
+height: calc(85% - 20px);
+}
+
+.riqi{
+  position: absolute;
+  margin-left: 24px;
+  margin-top: 21px;
+  font-size: 15px;
+  color:#00f6ff;
+  float: left;
+}
+
+.riqi1{
+  position: absolute;
+  margin-left: 24px;
+  margin-top: 3px;
+  font-size: 15px;
+  float: left;
+  line-height: 50px;
+}
+
+.riqi2{
+  position: absolute;
+  margin-left: 24px;
+  font-size: 15px;
+  margin-top: 50px;
+  float: left;
+  line-height: 50px;
+}
+
+.dtime2{
+      position: absolute;
+      margin-left: 74px;
+      margin-top:12px;
+      float: left;
+      /deep/ .el-input__inner {
+          background-color: transparent;
+          border: 1px solid #00cbd4;
+          color:#00cbd4;
+      }
+      /deep/ .el-date-editor.el-input, .el-date-editor.el-input__inner {
+          width: 150px;
+      }
+}
+
+.dtime21{
+      position: absolute;
+      margin-left: 120px;
+      margin-top:12px;
+      float: left;
+      /deep/ .el-date-editor.el-input, .el-date-editor.el-input__inner {
+          width: 150px;
+      }
+}
+
+.dtime22{
+      position: absolute;
+      margin-left: 120px;
+      margin-top: 62px;
+      float: left;
+      /deep/ .el-date-editor.el-input, .el-date-editor.el-input__inner {
+          width: 150px;
+      }
+}
+
+.zhibiao{
+  position: absolute;
+  margin-left: 238px;
+  margin-top: 21px;
+  font-size: 15px;
+  float: left;
+}
+
+.input{
+  position: absolute;
+  width: 150px;
+  margin-left: 319px;
+  margin-top: 12px;
+  float: left;
+   /deep/ .el-input__inner {
+          background-color: transparent;
+          border: 1px solid #00cbd4;
+          color:#00cbd4;
+      }
+      /deep/ .el-date-editor.el-input, .el-date-editor.el-input__inner {
+          width: 150px;
+      }
+}
+.zhibiaotype{
+  position: absolute;
+  margin-left: 487px;
+  margin-top: 21px;
+  font-size: 15px;
+  float: left;
+}
+.select{
+  position: absolute;
+  margin-left: 567px;
+  margin-top: 12px;
+  width: 135px;
+  font-size: 15px;
+ /deep/ .el-input__inner {
+          background-color: transparent;
+          border: 1px solid #00cbd4;
+          color:#00cbd4;
+      }
+      /deep/ .el-date-editor.el-input, .el-date-editor.el-input__inner {
+          width: 150px;
+      }
+  float: left;
+}
+.button1{
+  position: absolute;
+  margin-left: 727px;
+  margin-top: 12px;
+  width: 70px;
+  font-size: 15px;
+  float: left;
+
+}
+.button2{
+  position: absolute;
+  margin-left: 818px;
+  margin-top: 12px;
+  width: 70px;
+  font-size: 15px;   
+  float: left;
+}
+
+.button3{
+  position: absolute;
+  margin-left: 910px;
+  margin-top: 12px;
+  width: 70px;
+  font-size: 15px;   
+  float: left;
+}
+
+.table1{
+  margin-left: 30px;
+  margin-right: 20px;
+  margin-top: 0px;
+  margin-bottom: 40px;
+  width: calc(50% - 50px);
+  height: calc(100% - 40px) ;
+  float: left;
+}
+.table2{
+  margin-left: 0px;
+  margin-right: 30px;
+  margin-top: 0px;
+  margin-bottom: 40px;
+  width: calc(50% - 30px);
+  height: calc(100% - 40px) ;
+  float: left;
+}
+.table3{
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: 25px;
+  margin-bottom: 55px;
+  width: calc(100% - 60px);
+  height: calc(100% - 80px) ;
+  float: left;
+}
+
+ el-table--striped .el-table__body tr.el-table__row--striped.current-row td,
+.el-table__body tr.current-row>td {
+background-color:pink;
+}
+
+/deep/ .el-table {
+  	 border: 0;
+		 th,
+		 tr,
+		 td{
+			  border: 0;
+		 }
+		 &::before {
+			  height: 0px;
+		  }
+		  &::after {
+			 width: 0;
+		  }
+		 .el-table__fixed:before {
+			 height: 0;
+		  }
+  background: transparent !important;
+}
+
+/deep/.el-table tr{
+  background: transparent  !important;
+}
+
+.el-button--primary,.el-button--primary:focus, .el-button--primary:hover {
+    background: transparent;
+    border-color: #00f6ff;
+    color:#00f6ff;
+}
+
+/deep/.el-table tbody tr:hover>td { 
+    background-color:rgba(0,172,179,0.1) !important;
+}
+
+
+
+// // 滚动条的滑块
+//   /deep/ ::-webkit-scrollbar {
+//     background-color: #00a1a7;
+//     border-radius: 3px;
+//   }
+</style>

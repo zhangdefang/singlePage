@@ -1,0 +1,58 @@
+{
+  "id": "2681352",
+  "name": "elementui",
+  "font_family": "iconfont",
+  "css_prefix_text": "el-icon-zz",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "182642",
+      "name": "其他",
+      "font_class": "qita",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "410304",
+      "name": "集团客户发展统计",
+      "font_class": "jituan",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "903796",
+      "name": "火",
+      "font_class": "huo",
+      "unicode": "e664",
+      "unicode_decimal": 58980
+    },
+    {
+      "icon_id": "8039589",
+      "name": "光伏",
+      "font_class": "guangfu",
+      "unicode": "e678",
+      "unicode_decimal": 59000
+    },
+    {
+      "icon_id": "11261627",
+      "name": "电厂",
+      "font_class": "bianzu",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "11813348",
+      "name": "风车",
+      "font_class": "feng",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "22943820",
+      "name": "水电",
+      "font_class": "shuidian",
+      "unicode": "e679",
+      "unicode_decimal": 59001
+    }
+  ]
+}

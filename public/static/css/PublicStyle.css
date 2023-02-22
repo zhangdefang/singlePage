@@ -1,0 +1,100 @@
+/* 设置label背景色为白色*/
+.drop-panel .el-tag.el-tag--info {
+    background-color: #fff;
+    border: 0;
+  }
+  .el-table__header-wrapper {
+    height: 35px !important;
+  }
+  
+  /* 去掉日期的清除时间功能 */
+  .el-input__suffix-inner {
+    display: none !important;
+  }
+  
+  /* 设置btn背景色 */
+  .el-button--small,
+  .el-button--small.is-round {
+    background-color: #08429d !important;
+    border: 0;
+    text-align: right;
+  }
+  
+  /*设置表格选中默认背景色 */
+  .drop-panel .el-table__body tr.current-row > td {
+    background-color: #ebeef2 !important;
+  }
+  .drop-panel
+    .el-table--striped
+    .el-table__body
+    tr.el-table__row--striped.current-row
+    td {
+    background-color: #ebeef2;
+  }
+  /* 修改隔行变色的颜色 */
+  .el-table--striped
+    .el-table__body
+    tr.el-table__row--striped.el-table__row--striped.el-table__row--striped
+    td {
+    background-color: #fafafa; /*替换为你需要的颜色，觉得优先级不够就加!important*/
+  }
+  
+  .el-table--border:after,
+  .el-table--group:after,
+  .el-table:before {
+    background-color: #e4e4e4 !important;
+  }
+  
+  .el-table--border,
+  .el-table--group {
+    border-color: #e4e4e4 !important;
+  }
+  
+  .el-table td,
+  .el-table th.is-leaf {
+    border-bottom: 1px solid #e4e4e4 !important;
+  }
+  
+  .el-table--border th,
+  .el-table--border th.gutter:last-of-type {
+    border-bottom: 1px solid #e4e4e4 !important;
+  }
+  
+  .el-table--border td,
+  .el-table--border th {
+    border-right: 1px solid #e4e4e4 !important;
+  }
+  
+  /* //根据ui提供样式修改禁用按钮样式 */
+  .el-button--primary.is-disabled,
+  .el-button--primary.is-disabled:active,
+  .el-button--primary.is-disabled:focus,
+  .el-button--primary.is-disabled:hover {
+    color: #fff;
+    background-color: #08429d !important;
+    opacity: 0.3;
+    border: 0;
+  }
+  /* 根据ui提供修改表格表头字体不加粗 */
+  .el-table thead div {
+    font-weight: normal !important;
+  }
+  
+  /* 设置主背景背景色 */
+  .drop-panel{
+    background-color: #e4e4e4;
+  }
+  
+  /* 设置表头渐变色 */
+  .el-table th {
+    background: linear-gradient(to top, #073c8f, #08429d);
+    color: #fff;
+  }
+
+  button > span {
+    margin-left: 5px;
+  }
+
+  .el-tree-node__label > span{
+    margin-left: 5px;
+  }
